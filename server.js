@@ -45,4 +45,12 @@ app.get("/", (req, res) => {
       <head><title>Cool Unblocked Games Proxy</title></head>
       <body>
         <h1>Cool Unblocked Games Proxy</h1>
-        <form method="G
+        <form method="GET" action="/">
+          <input
+            type="text"
+            id="urlInput"
+            name="url"
+            placeholder="Enter full URL like https://example.com"
+            style="width:300px"
+            value="${targetUrl}"
+            required
