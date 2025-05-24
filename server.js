@@ -11,11 +11,15 @@ app.use(
     router: (req) => {
       try {
         const url = new URL(req.url, `http://${req.headers.host}`);
-        const targetUrl = url.searchParams.get("url");
+        let targetUrl = url.searchParams.get("url");
         if (!targetUrl) {
           return "https://example.com";
         }
-        new URL(targetUrl); // Validate URL
+        // Add protocol if missing
+        if (!targetUrl.startsWith("http://") && !targetUrl.startsWith("https://")) {
+          targetUrl = "https://" + targetUrl;
+        }
+        new URL(targetUrl); // validate URL
         return targetUrl;
       } catch {
         return "https://example.com";
@@ -34,10 +38,26 @@ app.get("/", (req, res) => {
       <head><title>Cool Unblocked Games Proxy</title></head>
       <body>
         <h1>Cool Unblocked Games Proxy</h1>
-        <form method="GET" action="/proxy">
-          <input type="text" name="url" placeholder="Enter full URL like https://example.com" style="width:300px" required />
+        <form method="GET" action="/proxy" onsubmit="addProtocol()">
+          <input
+            type="text"
+            id="urlInput"
+            name="url"
+            placeholder="Enter full URL like https://example.com"
+            style="width:300px"
+            required
+          />
           <button type="submit">Go</button>
         </form>
+
+        <script>
+          function addProtocol() {
+            const input = document.getElementById('urlInput');
+            if (!input.value.startsWith('http://') && !input.value.startsWith('https://')) {
+              input.value = 'https://' + input.value;
+            }
+          }
+        </script>
       </body>
     </html>
   `);
