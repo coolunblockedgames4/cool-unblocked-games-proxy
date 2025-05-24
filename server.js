@@ -6,7 +6,7 @@ const app = express();
 app.use(
   "/proxy",
   createProxyMiddleware({
-    target: "", // target will be dynamic
+    target: "", // target is dynamic
     changeOrigin: true,
     router: (req) => {
       try {
@@ -44,3 +44,5 @@ app.get("/", (req, res) => {
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
+  console.log("Listening on port " + listener.address().port);
+});
