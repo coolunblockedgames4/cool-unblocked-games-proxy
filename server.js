@@ -54,3 +54,22 @@ app.get("/", (req, res) => {
             style="width:300px"
             value="${targetUrl}"
             required
+          />
+          <button type="submit">Go</button>
+        </form>
+        ${
+          targetUrl
+            ? `<iframe src="/proxy?url=${encodeURIComponent(
+                targetUrl
+              )}" style="width:100%; height:90vh; border:none;"></iframe>`
+            : ""
+        }
+      </body>
+    </html>
+  `);
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
